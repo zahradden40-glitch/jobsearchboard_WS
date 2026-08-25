@@ -2,34 +2,20 @@
   "version": 1,
 
   "_comment": [
-    "Process / chemical engineering job search, Germany-wide.",
+    "Economics / VWL / Economic Research job search, Germany-wide and cross-border commuter regions.",
     "",
-    "Query terms come from json_tag.txt (2026-08-04): every tag there was lifted",
-    "from a live German posting rather than invented, so these are the phrasings",
-    "employers actually use.",
+    "PORTALS: defaults hold arbeitsagentur-search (German federal official API backbone),",
+    "stepstone-search, and freehire-search. xing-search and linkedin-search are opted into",
+    "the core title profiles to keep request volume low.",
     "",
-    "PORTALS. defaults hold the three that measurably carry this field:",
-    "arbeitsagentur (official federal API, all sectors - the backbone), stepstone,",
-    "and freehire. arbeitnow is deliberately absent: probed with",
-    "'Verfahrensingenieur', 'Process Engineer' and 'Werkstudent Verfahrenstechnik'",
-    "it returned 0 results every time - it is a tech/remote board and carries",
-    "nothing for this field. xing and linkedin are personal-use-only per their",
-    "SKILL.md, so they are opted into the four core title profiles only, to keep",
-    "request volume low rather than firing on all twelve.",
+    "TARGETS: Junior, PreDoc, Research Assistant, Wissenschaftlicher Mitarbeiter,",
+    "Werkstudent, Praktikum, and Graduate / Entry-level roles.",
     "",
-    "NO exclude_titles. Werkstudent, Praktikum and Abschlussarbeit roles are",
-    "TARGETS here (tag categories 2 and 3), not noise. Over-filtering hides real",
-    "jobs; under-filtering only adds a row you can skim past.",
-    "",
-    "LOCATION is intentionally unset = nationwide. The source postings span",
-    "Frankfurt, Berlin, Essen, Hamburg, Leverkusen and Landau, so pinning one city",
-    "would cut most of them. The two portals that need an explicit scope get it",
-    "once in defaults.portal_overrides: linkedin requires a location string, and",
-    "freehire is worldwide unless given --country."
+    "LOCATION is nationwide (DE) by default. Overrides scope freehire to DE and LinkedIn to Germany."
   ],
 
   "defaults": {
-    "jobage": 7,
+    "jobage": 3,
     "limit": 25,
     "portals": ["arbeitsagentur-search", "stepstone-search", "freehire-search"],
     "portal_overrides": {
@@ -39,31 +25,36 @@
   },
 
   "profiles": [
-    { "id": "verfahrensingenieur",  "enabled": true, "query": "Verfahrensingenieur",
+    { "id": "volkswirt",                        "enabled": true,  "query": "Volkswirt",
       "portals": ["+xing-search", "+linkedin-search"] },
-
-    { "id": "prozessingenieur",     "enabled": true, "query": "Prozessingenieur",
-      "portals": ["+xing-search"] },
-
-    { "id": "chemieingenieur",      "enabled": true, "query": "Chemieingenieur",
-      "portals": ["+xing-search"] },
-
-    { "id": "process-engineer-en",  "enabled": true, "query": "Process Engineer",
+    { "id": "volkswirtschaftslehre",            "enabled": true,  "query": "Volkswirtschaftslehre",
       "portals": ["+xing-search", "+linkedin-search"] },
+    { "id": "economist-en",                     "enabled": true,  "query": "Economist",
+      "portals": ["+xing-search", "+linkedin-search"] },
+    { "id": "economic-research-en",             "enabled": true,  "query": "Economic Research",
+      "portals": ["+xing-search", "+linkedin-search"] },
+    { "id": "wirtschaftsforschung",             "enabled": true,  "query": "Wirtschaftsforschung",
+      "portals": ["+xing-search"] },
+    { "id": "wirtschaftsanalyse",               "enabled": true,  "query": "Wirtschaftsanalyse",
+      "portals": ["+xing-search"] },
+    { "id": "entwicklungsokonomie",             "enabled": true,  "query": "Entwicklungsökonomie" },
+    { "id": "development-economics-en",         "enabled": true,  "query": "Development Economics" },
+    { "id": "wirtschaftspolitik",               "enabled": true,  "query": "Wirtschaftspolitik" },
+    { "id": "policy-analysis-en",               "enabled": true,  "query": "Policy Analysis" },
+    { "id": "umweltoekonomie",                  "enabled": true,  "query": "Umweltökonomie" },
+    { "id": "energieoekonomie",                 "enabled": true,  "query": "Energieökonomie" },
+    { "id": "arbeitsmarktoekonomie",            "enabled": true,  "query": "Arbeitsmarktökonomie" },
+    { "id": "aussenwirtschaft",                 "enabled": true,  "query": "Außenwirtschaft" },
+    { "id": "finanzwissenschaft",               "enabled": true,  "query": "Finanzwissenschaft" },
+    { "id": "werkstudent-vwl",                  "enabled": true,  "query": "Werkstudent VWL" },
+    { "id": "praktikum-vwl",                    "enabled": true,  "query": "Praktikum VWL" },
+    { "id": "wiss-mitarbeiter-vwl",             "enabled": true,  "query": "Wissenschaftlicher Mitarbeiter VWL" },
+    { "id": "research-assistant-econ",          "enabled": true,  "query": "Research Assistant Economics" },
+    { "id": "predoc-economics",                 "enabled": true,  "query": "PreDoc Economics" },
 
-    { "id": "verfahrenstechnik-breit",         "enabled": true, "query": "Verfahrenstechnik" },
-    { "id": "prozesssimulation",               "enabled": true, "query": "Prozesssimulation" },
-    { "id": "werkstudent-verfahrenstechnik",   "enabled": true, "query": "Werkstudent Verfahrenstechnik" },
-    { "id": "praktikum-verfahrenstechnik",     "enabled": true, "query": "Praktikum Verfahrenstechnik" },
-    { "id": "werkstudent-energietechnik",      "enabled": true, "query": "Werkstudent Energietechnik" },
-    { "id": "biogas-gasaufbereitung",          "enabled": true, "query": "Biogasaufbereitung" },
-    { "id": "destillation-rektifikation",      "enabled": true, "query": "Destillation" },
-    { "id": "trenntechnik-waermetauscher",     "enabled": true, "query": "Trenntechnik" },
-
-    { "id": "chemical-engineer-en", "enabled": false, "query": "Chemical Engineer",
-      "_note": "English variant, overlaps heavily with process-engineer-en. Flip on for wider English coverage." },
-
-    { "id": "erneuerbare-energien", "enabled": false, "query": "Erneuerbare Energien",
-      "_note": "Broad energy-transition net: high volume, lower precision. Enable if the targeted energy profiles run dry." }
+    { "id": "applied-economics-en",             "enabled": false, "query": "Applied Economics",
+      "_note": "English variant; enable for broader international scope." },
+    { "id": "gesundheitsoekonomie",             "enabled": false, "query": "Gesundheitsökonomie",
+      "_note": "Specialized health economics net. Enable for healthcare research institutes." }
   ]
 }

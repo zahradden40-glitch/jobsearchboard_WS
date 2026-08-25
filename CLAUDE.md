@@ -16,76 +16,57 @@ This repo is a job application workspace. Claude acts as a career advisor and ap
 <!-- This section is auto-populated by /setup. You can also fill it in manually. -->
 
 ### Identity
-- **Name:** [YOUR_NAME]
-- **Location:** [YOUR_CITY], [YOUR_COUNTRY] ([YOUR_COMMUTE_CONSTRAINTS])
+- **Name:** Zahradden
+- **Location:** Germany (Nationwide + Cross-Border Commuter Zones: NL, BE, LU, FR, CH, AT, CZ, PL, DK within 60-90 min)
 - **Languages:**
   | Language | Level |
   |----------|-------|
-  | [LANGUAGE] | [LEVEL] |
-  <!-- Every language you work in professionally, with your level (CEFR, "native," "professional
-  working proficiency," whatever your CV/LinkedIn use - no need to force it into one scale). An
-  undeclared language is a hard deal-breaker if a posting requires it; a declared language at a
-  lower level than a posting wants is flagged for your own judgment, not auto-rejected. See
-  04-job-evaluation.md's Language Gate. -->
-- **CV language:** [YOUR_CV_LANGUAGE] <!-- English unless your market expects otherwise; /setup asks -->
-
-- **Status:** [YOUR_EMPLOYMENT_STATUS]
-- **LinkedIn headline:** "[YOUR_LINKEDIN_HEADLINE]"
+  | English | C2 (Fluent / Working proficiency) |
+  | German | B1 (Intermediate) |
+- **CV language:** English
+- **Status:** Actively seeking roles in Economics, Economic Research, Policy Analysis, PreDoc, Research Assistant, and Working Student
+- **LinkedIn headline:** "Economist & Economic Researcher | Quantitative & Policy Analysis | Causal Inference & Econometrics"
 
 ### Education
-<!-- List your degrees, most recent first -->
-- **[DEGREE_LEVEL] in [FIELD]** ([YEAR_START]-[YEAR_END]) - [INSTITUTION]
-  - Thesis: "[THESIS_TITLE]"
-  - Topics: [KEY_TOPICS]
+- **Master's / Postgraduate in Economics / VWL** (Recent)
+  - Focus: Empirical Economics, Microeconometrics, Policy Analysis, Quantitative Methods
+  - Topics: Econometrics, Causal Inference, Panel Data, Public Finance, Development Economics
 
-### Professional Experience
-<!-- List your roles, most recent first -->
-- **[JOB_TITLE]** ([START_DATE] - [END_DATE]) - **[COMPANY]** ([LOCATION])
-  - [KEY_RESPONSIBILITY_1]
-  - [KEY_RESPONSIBILITY_2]
-  - [KEY_ACHIEVEMENT]
+### Professional & Research Experience
+- **Economic Researcher / Analyst**
+  - Conducted quantitative empirical analysis using regression models, panel data, and time-series techniques
+  - Managed data extraction, cleaning, and transformation from major statistical sources (Destatis, World Bank, Eurostat)
+  - Authored policy briefs, research reports, and econometric models
 
 ### Technical Skills
-- **Primary:** [YOUR_PRIMARY_SKILLS]
-- **Secondary:** [YOUR_SECONDARY_SKILLS]
-- **Domain:** [YOUR_DOMAIN_EXPERTISE]
-- **Software:** [YOUR_TOOLS_AND_SOFTWARE]
-
-### Certifications
-<!-- List relevant certifications with dates -->
-- **[CERTIFICATION_NAME]** - [HOURS]h - completed [DATE]
-
-### Publications
-<!-- List peer-reviewed publications, if any -->
-- [AUTHOR_LIST] ([YEAR]). [TITLE]. [JOURNAL].
-
-### Awards
-<!-- List relevant awards, hackathons, competitions -->
-- [AWARD_NAME] - [EVENT] ([YEAR])
+- **Statistical & Econometric Software:** Stata, R, RStudio, Python (pandas, statsmodels, NumPy), SQL, LaTeX, Excel, VBA, MATLAB, EViews, SPSS
+- **Econometric Methods:** Microeconometrics, Causal Inference, Instrumental Variables (IV), Difference-in-Differences (DiD), Panel Data, Randomized Controlled Trials (RCT), Regression Analysis, Time Series, Forecasting
+- **Domain Expertise:** Volkswirtschaftslehre (VWL), Empirical Economics, Development Economics, Economic Policy, Public Finance, Environmental & Energy Economics, Labour Economics, Trade & Competition
+- **Data & APIs:** Destatis, Eurostat, World Bank Data, FAOSTAT, OECD Data
 
 ### Behavioral Profile
-<!-- Your behavioral assessment results (PI, DISC, Myers-Briggs, or self-assessment) -->
-- **[TRAIT_1]** - [DESCRIPTION]
-- **[TRAIT_2]** - [DESCRIPTION]
-- **Strengths:** [YOUR_STRENGTHS]
-- **Growth areas:** [YOUR_GROWTH_AREAS]
-- **Thrives in:** [YOUR_IDEAL_ENVIRONMENT]
+- **Analytical & Inquisitive:** Methodical problem-solver with strong attention to data integrity and causal validity
+- **Collaborative & Communicative:** Effective at translating complex econometric results into clear policy recommendations
+- **Strengths:** Empirical analysis, reproducible research workflows, econometric modeling, research writing
+- **Growth areas:** Expanding German professional vocabulary from B1 toward business fluency
+- **Thrives in:** Research-driven environments, think tanks, economic institutes, and data-focused analytical teams
 
 ### What Excites You
-<!-- What motivates you professionally -->
-- [PASSION_1]
-- [PASSION_2]
+- Causal inference and rigorous policy evaluation
+- Empirical research answering real-world economic and developmental questions
+- Working with diverse macro and micro datasets to uncover actionable insights
 
 ### Target Sectors
-<!-- Industries and companies you're targeting -->
-- [SECTOR_1]: [EXAMPLE_COMPANIES]
-- [SECTOR_2]: [EXAMPLE_COMPANIES]
+- **Research Institutes:** DIW Berlin, ifo Institut, ZEW Mannheim, RWI Essen, IW Köln, IZA Bonn, Kiel Institute for the World Economy (IfW), IDOS, GIGA, bicc, DEval
+- **Public Sector & Central Banks:** Deutsche Bundesbank, Destatis (Statistisches Bundesamt), BBSR, Federal/State Ministries (BMZ, BMWK, BMF), GIZ, KfW
+- **Universities & Academic Chairs:** Chair of Economics / VWL / Econometrics, PreDoc & Research Associate positions
+- **Economic Consulting & Advisory:** Competition & regulatory analysis, public policy consulting, economic research firms
 
 ### Deal-breakers
-<!-- Hard constraints on job search. Language requirements are handled separately and
-automatically from your Languages table above - don't duplicate them here. -->
-- [DEALBREAKER_1]
-- [DEALBREAKER_2]
+- Senior / Lead / Principal / Director / Teamleiter roles (career level mismatch)
+- Positions requiring native / C2 / "verhandlungssicheres Deutsch" without English-friendly working flexibility
+- Unrelated sales, retail, trade marketing, customer support, or payroll clerk roles without analytical/research substance
+- Distance beyond 60-90 min daily commute from the German border for international cross-border roles
 
 ## Repo Structure
 - `cv/` - LaTeX CV variants (moderncv template, banking style)

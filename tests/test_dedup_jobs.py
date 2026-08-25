@@ -339,5 +339,61 @@ class Cli(unittest.TestCase):
         self.assertIn("1 records -> 1 unique", result.stdout)
 
 
+class EconomicsExtensions(unittest.TestCase):
+    def test_extract_vacancy_codes(self):
+        cases = [
+            ("Referenznummer: VII-322/26", "VII-322/26"),
+            ("Stellenausschreibung w45-26", "w45-26"),
+            ("Kennziffer: 70001-06/26", "70001-06/26"),
+            ("No reference code here", None),
+        ]
+        for text, expected in cases:
+            with self.subTest(text=text):
+                self.assertEqual(dedup_jobs.extract_vacancy_code(text), expected)
+
+    def test_employer_aliases(self):
+        self.assertEqual(dedup_jobs.normalize_company("DIW"), "diw berlin")
+        self.assertEqual(dedup_jobs.normalize_company("Deutsches Institut für Wirtschaftsforschung e.V."), "diw berlin")
+        self.assertEqual(dedup_jobs.normalize_company("ifo Institut"), "ifo institut")
+        self.assertEqual(dedup_jobs.normalize_company("ZEW – Leibniz-Zentrum für Europäische Wirtschaftsforschung GmbH"), "zew mannheim")
+        self.assertEqual(dedup_jobs.normalize_company("GIZ GmbH"), "deutsche gesellschaft fuer internationale zusammenarbeit")
+        self.assertEqual(dedup_jobs.normalize_company("Destatis"), "statistisches bundesamt")
+        self.assertEqual(dedup_jobs.normalize_company("Deutsche Bundesbank"), "deutsche bundesbank")
+
+    def test_negative_keywords_and_disambiguation(self):
+        # Out of scope
+        out_cases = [
+            ("Senior Economist", ""),
+            ("Lead Policy Analyst", ""),
+            ("Head of Economic Research", ""),
+            ("Teamleiter VWL", ""),
+            ("Software Developer (m/w/d)", ""),
+            ("Fullstack Web Development", ""),
+            ("Retail Trade Marketing Manager", ""),
+            ("Lohnbuchhaltung / Payroll Specialist", ""),
+            ("GIS Engineer", "Wartung von gasisolierte Schaltanlagen (GIS)"),
+        ]
+        for title, desc in out_cases:
+            with self.subTest(title=title):
+                is_out, reason = dedup_jobs.is_out_of_scope(title, desc)
+                self.assertTrue(is_out, f"Expected {title} to be out of scope")
+
+        # In scope
+        in_cases = [
+            ("Junior Economist (m/w/d)", ""),
+            ("Wissenschaftlicher Mitarbeiter VWL", ""),
+            ("PreDoc in Applied Microeconometrics", ""),
+            ("Development Economics Research Assistant", ""),
+            ("Working Student Economic Policy", ""),
+            ("Research Associate International Trade", ""),
+            ("Spatial Econometrics & GIS Analyst", "Analyzing satellite and spatial data with GIS"),
+        ]
+        for title, desc in in_cases:
+            with self.subTest(title=title):
+                is_out, reason = dedup_jobs.is_out_of_scope(title, desc)
+                self.assertFalse(is_out, f"Expected {title} to be in scope, but was rejected: {reason}")
+
+
 if __name__ == "__main__":
     unittest.main()
+

@@ -48,100 +48,55 @@ Judge the level comparison the same way you judge everything else in this framew
 
 ## Scoring Dimensions
 
-Evaluate each job posting against these five dimensions:
+## Disambiguation & False-Positive Filters — run before scoring
 
-### 1. Technical Skills Match (0-100)
-How well do the required/preferred skills align with the candidate's capabilities?
+Reject false keyword matches and out-of-scope roles immediately:
+- **"Development"**: Reject software development, IT engineering, or business development; keep only *development economics, international development, Entwicklungsökonomie, Entwicklungszusammenarbeit, M&E*.
+- **"Trade"**: Reject retail trade, trade marketing, and store merchandising; keep only *international trade, Außenwirtschaft, trade policy, competition economics*.
+- **"Tax"**: Reject routine payroll clerks and bookkeeping (`Lohnbuchhaltung`); keep only *tax economics, tax advisory, fiscal policy, public finance*.
+- **"GIS"**: Reject electrical gas-insulated switchgear (*Gasisolierte Schaltanlage*); keep only *Geographic Information Systems / spatial econometrics*.
+- **Negative Keywords (Hard Reject)**: Senior, Lead, Principal, Director, Head of, Leitung, Leiter, Teamleiter, Schülerpraktikum, Ausbildung, Frischetheke, Verkauf, Vertrieb, Außendienst, Einzelhandel, Pflege, Gehaltsabrechnung, Lohnbuchhaltung, payroll, trade marketing, Backoffice, Callcenter, Versicherungsvertrieb, Immobilienmakler, Maschinenbau, Medizin.
+- **Experience Ceiling**: Reject vacancies requiring clearly excessive experience (>2 years for junior/entry level).
 
-| Score | Meaning |
-|-------|---------|
-| 80-100 | Core requirements are primary skills |
-| 60-79 | Most requirements match, 1-2 gaps that are learnable |
-| 40-59 | Partial match, significant upskilling needed |
-| 0-39 | Fundamental mismatch |
+## Scoring Dimensions & Weighting (0–100)
 
-**Strong match areas:** [YOUR_PRIMARY_SKILLS]
-**Moderate match areas:** [YOUR_SECONDARY_SKILLS]
-**Weak match areas:** [SKILLS_YOU_LACK]
+Evaluate each surviving job posting against these five dimensions:
 
-### 2. Experience Match (0-100)
-Does work history align with what they're looking for?
+### 1. CV & Technical Skills Match (Max: 35 points)
+- **30–35 pts:** Direct proficiency in core quantitative tools (Stata, R, Python with pandas/statsmodels, SQL, Econometric modeling, Causal Inference, Panel Data, Microeconometrics).
+- **20–29 pts:** General empirical/quantitative requirements, Excel/VBA, basic regression, or easily transferable econometric methods.
+- **10–19 pts:** Partial data analysis match; requires significant tool upskilling.
+- **0–9 pts:** Non-empirical or misaligned technical requirements.
 
-| Score | Meaning |
-|-------|---------|
-| 80-100 | Direct experience in the same domain and role type |
-| 60-79 | Related experience, transferable skills clear |
-| 40-59 | Adjacent experience, would need to make the case |
-| 0-39 | Unrelated experience |
+### 2. Economics Domain Relevance (Max: 25 points)
+- **20–25 pts:** Core Volkswirtschaftslehre (VWL), empirical economic research, public policy analysis, development economics, environmental/energy economics, labor economics, competition/antitrust, or public finance.
+- **12–19 pts:** Adjacent policy research, market analysis, economic consulting, or quantitative social science.
+- **5–11 pts:** General business/data analyst role with minimal economic theory/methods.
+- **0–4 pts:** Irrelevant domain.
 
-**Strong:** [YOUR_DIRECT_EXPERIENCE_DOMAINS]
-**Moderate:** [YOUR_ADJACENT_EXPERIENCE]
-**Entry-level:** [ROLES_WITH_LIMITED_EXPERIENCE]
+### 3. Career-Level Fit (Max: 20 points)
+- **18–20 pts:** Ideal target level: Junior Economist, PreDoc, Research Assistant, Wissenschaftlicher Mitarbeiter, Working Student (Werkstudent), Graduate / Trainee, Intern (Praktikum), Entry Level ($\le 2$ years experience).
+- **10–17 pts:** General entry-level / mid-level with flexible experience requirements.
+- **0–9 pts:** Too senior (>2–3 years mandatory experience) or student internship when seeking full-time.
 
-### 3. Behavioral/Culture Fit (0-100)
-Does the role and company culture match the behavioral profile?
+### 4. Location & Remote Fit (Max: 10 points)
+- **10 pts:** Germany (nationwide) or full remote within Germany.
+- **7–9 pts:** Designated cross-border commuter zone within 60–90 minutes of the German border (e.g. Enschede, Luxembourg, Liège, Strasbourg, Basel, Salzburg, Kufstein, Bregenz).
+- **0 pts / FAIL:** Distant international locations requiring foreign relocation without remote compatibility.
 
-| Score | Meaning |
-|-------|---------|
-| 80-100 | Culture strongly matches behavioral preferences |
-| 60-79 | Mixed signals but mostly compatible |
-| 40-59 | Some friction areas |
-| 0-39 | Significant culture mismatch |
+### 5. Recency (Max: 10 points)
+- **10 pts:** Posted within the last 3 days.
+- **5–8 pts:** Posted within 4–7 days.
+- **0–4 pts:** Older posting (>7 days); only reported if overall score $\ge 80$.
 
-**Red flags to research:** Department disorganization, work dominated by maintenance over development, poor chemistry with leadership, culture mismatches. Check reviews, media coverage, LinkedIn connections, and network contacts for insider perspective.
+## Score Classification & Thresholds
 
-### 4. Location & Logistics (Pass/Fail + Notes)
-- Within commute range: PASS
-- Remote with occasional office: PASS
-- Requires relocation: FAIL (deal-breaker)
-- Frequent international travel: FLAG (discuss with user)
+Total Score = Sum of dimensions (0 to 100).
 
-### 5. Career Alignment & Motivation (0-100)
-Does this role advance career goals and contain tasks that energize?
-
-| Score | Meaning |
-|-------|---------|
-| 80-100 | Strongly aligned with career direction, clear growth path |
-| 60-79 | Good role but only partially aligned with long-term goals |
-| 40-59 | Decent job but doesn't build toward career goals |
-| 0-39 | Dead end or backwards step |
-
-**Career goals:**
-- [YOUR_CAREER_GOAL_1]
-- [YOUR_CAREER_GOAL_2]
-- [YOUR_CAREER_GOAL_3]
-
-**Motivation filter:** Evaluate not just whether you *can* do the tasks, but whether the tasks will *energize* you. Consider:
-- Tasks that energize: [YOUR_ENERGIZING_TASKS]
-- Tasks that drain: [YOUR_DRAINING_TASKS]
-- Non-task factors: leadership style, department culture, company values, degree of autonomy
-
-**Life situation alignment:** Consider personal constraints:
-- **Security**: [YOUR_FINANCIAL_SITUATION_CONTEXT]
-- **Flexibility**: [YOUR_SCHEDULE_CONSTRAINTS]
-- **Professional development**: [YOUR_GROWTH_PRIORITIES]
-
-### 6. Salary Benchmark (Optional)
-
-If the salary lookup tool is configured (`salary_data.json` exists), look up the company:
-```
-python salary_lookup.py "<Company Name>" --json
-```
-
-If a city is known from the posting, add `--city "<City>"` to narrow results.
-
-Present findings as:
-```
-### Salary Benchmark
-| Metric | Value |
-|--------|-------|
-| [Category] index | XX.X (+/-X.X% vs baseline) |
-| Overall index | XX.X (+/-X.X% vs baseline) |
-```
-
-Interpret results relative to the baseline defined in the data file's metadata. For index-based data, higher typically means above-market compensation.
-
-If the salary tool is not configured, skip this section.
+- **80–100 — 🔥 Strong Match**: Direct fit on skills and economics domain. Top priority for `/apply` or immediate action.
+- **65–79 — ✨ Possible Match**: Solid match with minor gaps or language flag.
+- **50–64 — 🔍 Exploratory**: Borderline or adjacent opportunity.
+- **< 50 — ❌ Discard / Do Not Report**: Automatically reject and log `reject_reason`.
 
 ## Output Format
 
@@ -150,49 +105,26 @@ Present the evaluation as:
 ```
 ## Job Fit Evaluation: [Role] at [Company]
 
-| Dimension | Score | Notes |
-|-----------|-------|-------|
-| Technical Skills | XX/100 | [brief note] |
-| Experience Match | XX/100 | [brief note] |
-| Behavioral Fit | XX/100 | [brief note] |
-| Location | PASS/FAIL | [brief note] |
-| Career Alignment | XX/100 | [brief note] |
+| Dimension | Points | Notes |
+|-----------|--------|-------|
+| CV & Technical Skills | XX / 35 | [e.g. Stata/R, microeconometrics match] |
+| Economics Domain | XX / 25 | [e.g. Development economics / policy analysis] |
+| Career-Level Fit | XX / 20 | [e.g. Junior / Research Associate fit] |
+| Location & Remote | XX / 10 | [e.g. Germany / Cross-border commuter] |
+| Recency | XX / 10 | [e.g. Posted 2 days ago] |
 
-**Overall Score: XX/100** (weighted average of scored dimensions)
+**Total Score: XX / 100** — [Strong Match / Possible Match / Exploratory / Reject]
+**Language Requirement:** [English C2 / German B1 note]
 
-### Verdict: [Strong Fit / Good Fit / Moderate Fit / Weak Fit / Poor Fit]
-
-### Key Strengths for This Role
+### Key Strengths
 - [bullet points]
 
-### Gaps to Address
+### Gaps / Flags
 - [bullet points]
 
 ### Recommendation
-[1-2 sentences: apply/skip/apply with caveats]
-
-### Company Research Checklist
-- [ ] Checked company website (mission, values, recent news)
-- [ ] Checked review sites (Glassdoor, Jobindex, etc.)
-- [ ] Checked LinkedIn for team size, recent hires, connections
-- [ ] Checked media for restructuring, growth, or workplace issues
-- [ ] Identified network contacts who may know the team/manager
+[Apply / Tailor / Skip]
 ```
-
-## Weighting
-- Technical Skills: 30%
-- Experience Match: 25%
-- Behavioral Fit: 15%
-- Career Alignment: 30%
-
-(Location is pass/fail, not weighted)
-
-## Thresholds
-- **Strong Fit** (75+): Definitely apply, tailor everything
-- **Good Fit** (60-74): Apply, address gaps in cover letter
-- **Moderate Fit** (45-59): Consider carefully, discuss with user
-- **Weak Fit** (30-44): Probably skip unless strategic reasons
-- **Poor Fit** (<30): Skip
 
 ## Pre-Application: Call the Employer (Best Practice)
 

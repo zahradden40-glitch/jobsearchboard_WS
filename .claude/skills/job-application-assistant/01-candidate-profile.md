@@ -8,56 +8,46 @@ framework_version: 1.1.1
 <!-- After running /setup, all sections will be filled with your actual information -->
 
 ## Identity
-- **Name:** [YOUR_NAME]
-- **Location:** [YOUR_ADDRESS]
-- **Phone:** [YOUR_PHONE]
-- **Email:** [YOUR_EMAIL]
-- **LinkedIn:** [YOUR_LINKEDIN_URL]
-- **GitHub:** [YOUR_GITHUB_URL]
-- **Status:** [YOUR_EMPLOYMENT_STATUS]
-- **Constraints:** [YOUR_COMMUTE_OR_LOCATION_CONSTRAINTS]
+- **Name:** Zahradden
+- **Location:** Germany (Nationwide + Cross-Border Commuter Zones)
+- **Phone:** 
+- **Email:** zahradden40@gmail.com
+- **LinkedIn:** 
+- **GitHub:** 
+- **Status:** Actively seeking roles in Economics, Economic Research, Policy Analysis, PreDoc, Research Assistant, Working Student
+- **Constraints:** Germany nationwide or cross-border locations within 60-90 minutes daily commute of the German border
 
 ### Languages
-<!-- Every language you can work in professionally, with your honest level. Used by the
-Language Gate in 04-job-evaluation.md and by job-scraper/search-queries.md's query-language
-generation. Omit any language you don't actually work in - an undeclared language is treated as
-a hard no, not a gap to smooth over. -->
-
 | Language | Level | Notes |
 |----------|-------|-------|
-| [LANGUAGE] | [LEVEL, e.g. "Native" / "C2" / "B1/B2 (conversational)"] | [optional] |
+| English | C2 | Native / Full professional proficiency |
+| German | B1 | Intermediate (conversational & reading proficiency) |
 
 ## Education
 
 | Degree | Period | Institution | Key Topics |
 |--------|--------|-------------|------------|
-| [DEGREE] | [YEARS] | [INSTITUTION] | [TOPICS] |
+| Master's / Postgraduate in Economics / VWL | Recent | — | Microeconometrics, Causal Inference, Panel Data, Public Finance, Development Economics |
 
-## Professional Experience
+## Professional & Research Experience
 
-### [JOB_TITLE] - [COMPANY] ([START] - [END])
-[LOCATION]
-- [RESPONSIBILITY_OR_ACHIEVEMENT_1]
-- [RESPONSIBILITY_OR_ACHIEVEMENT_2]
-- [RESPONSIBILITY_OR_ACHIEVEMENT_3]
-
-<!-- Add more roles as needed -->
-
-## Independent Projects
-<!-- Projects outside of employment: freelance, open source, personal -->
-- **[PROJECT_NAME]**: [DESCRIPTION]
+### Economic Researcher / Analyst
+- Applied econometrics using regression analysis, panel data, and time series
+- Managed data pipelines and analysis using Stata, R, and Python
+- Extracted and cleaned datasets from Destatis, Eurostat, World Bank, and FAOSTAT
+- Authored analytical reports and economic research briefings
 
 ## Technical Skills
 
-### Programming & ML
-- **[LANGUAGE]** ([PROFICIENCY]): [FRAMEWORKS_AND_LIBRARIES]
-- [OTHER_SKILLS]
+### Econometrics & Statistical Software
+- **Stata, R, RStudio, Python** (pandas, statsmodels, NumPy), SQL, Excel, VBA, MATLAB, EViews, SPSS
+- Microeconometrics, Causal Inference, Instrumental Variables (IV), Difference-in-Differences, Panel Data, RCT, Regression Analysis, Forecasting
 
 ### Domain Expertise
-- [DOMAIN_1]
-- [DOMAIN_2]
+- Volkswirtschaftslehre (VWL), Empirical Economics, Development Economics, Economic Policy, Environmental & Energy Economics, Public Finance, Labour Economics, Trade & Competition
 
 ### Software & Tools
+- LaTeX, Git, Power BI, Tableau, Jupyter Notebooks
 - [TOOL_LIST]
 
 ## Publications

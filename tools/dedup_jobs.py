@@ -79,6 +79,45 @@ LEGAL_FORMS = [
     "gruppe", "group", "holding", "deutschland", "germany",
 ]
 
+# Canonical employer aliases for German economic research institutes and institutions
+EMPLOYER_ALIASES = {
+    "diw": "diw berlin",
+    "deutsches institut fuer wirtschaftsforschung": "diw berlin",
+    "ifo": "ifo institut",
+    "ifo institut leibniz institut fuer wirtschaftsforschung an der universitaet muenchen": "ifo institut",
+    "zew": "zew mannheim",
+    "zew leibniz zentrum fuer europaeische wirtschaftsforschung": "zew mannheim",
+    "rwi": "rwi essen",
+    "rwi leibniz institut fuer wirtschaftsforschung": "rwi essen",
+    "iw koeln": "institut der deutschen wirtschaft",
+    "institut der deutschen wirtschaft koeln": "institut der deutschen wirtschaft",
+    "iza": "iza bonn",
+    "institut zur zukunft der arbeit": "iza bonn",
+    "kiel institute": "kiel institut fuer weltwirtschaft",
+    "ifw kiel": "kiel institut fuer weltwirtschaft",
+    "giz": "deutsche gesellschaft fuer internationale zusammenarbeit",
+    "destatis": "statistisches bundesamt",
+    "bundesbank": "deutsche bundesbank",
+}
+
+# German public sector vacancy reference codes: VII-322/26, w45-26, 70001-06/26, etc.
+VACANCY_CODE_PATTERNS = [
+    re.compile(r"\b([A-Za-z0-9]{1,8}-[0-9]{1,6}/[0-9]{2,4})\b"),
+    re.compile(r"\b([a-zA-Z][0-9]{2,5}-[0-9]{2,4})\b"),
+    re.compile(r"\b([0-9]{4,6}-[0-9]{2}/[0-9]{2,4})\b"),
+    re.compile(r"\b(?:kennziffer|ref(?:erenz)?(?:nr|nummer|\.)?|stellen-id|stellenausschreibung)\s*[:#]\s*([A-Za-z0-9\-_/]+)", re.IGNORECASE),
+    re.compile(r"\b(?:kennziffer|ref(?:erenz)?(?:nr|nummer|\.)?|stellen-id|stellenausschreibung)\s+([A-Za-z0-9\-_/]*[0-9][A-Za-z0-9\-_/]*)", re.IGNORECASE),
+]
+
+# Negative titles and keywords for hard rejection
+NEGATIVE_TITLE_TOKENS = [
+    "senior", "lead", "principal", "director", "head of", "leitung", "leiter", "teamleiter",
+    "schuelerpraktikum", "ausbildung", "frischetheke", "verkauf", "vertrieb", "aussendienst",
+    "einzelhandel", "pflege", "gehaltsabrechnung", "lohnbuchhaltung", "payroll",
+    "trade marketing", "backoffice", "callcenter", "versicherungsvertrieb", "immobilienmakler",
+    "maschinenbau", "medizin",
+]
+
 
 def strip_invisibles(text):
     """Step 1: drop zero-width/soft-hyphen characters, NBSP -> plain space."""
@@ -112,12 +151,51 @@ def normalize_title(title):
 
 
 def normalize_company(company):
-    """Normalize a company name for dedup (steps 1-3, 5, then 6)."""
+    """Normalize a company name for dedup (steps 1-3, 5, then 6) and resolve aliases."""
     text = _fold(strip_invisibles(company or ""))
     # Longest first, so "gmbh & co. kg" is consumed before the bare "gmbh".
     for form in sorted(LEGAL_FORMS, key=len, reverse=True):
         text = re.sub(rf"(?<![a-z0-9]){re.escape(form)}(?![a-z0-9])", " ", text)
-    return _collapse(text)
+    collapsed = _collapse(text)
+    return EMPLOYER_ALIASES.get(collapsed, collapsed)
+
+
+def extract_vacancy_code(text):
+    """Extract German vacancy reference code (e.g. VII-322/26, w45-26, 70001-06/26)."""
+    if not text:
+        return None
+    for pattern in VACANCY_CODE_PATTERNS:
+        match = pattern.search(text)
+        if match:
+            return match.group(1).strip()
+    return None
+
+
+def is_out_of_scope(title, description=""):
+    """Check for negative title keywords and false-positive disambiguation."""
+    norm_t = normalize_title(title)
+    for neg in NEGATIVE_TITLE_TOKENS:
+        if re.search(rf"\b{re.escape(neg)}\b", norm_t):
+            return True, f"Negative keyword: {neg}"
+
+    # Disambiguation 1: software/business dev vs development economics
+    if re.search(r"\b(software|web|frontend|backend|fullstack|business)\s+dev", norm_t):
+        return True, "False positive: software/business development"
+
+    # Disambiguation 2: retail trade vs trade economics
+    if re.search(r"\b(trade\s+marketing|retail|store)\b", norm_t):
+        return True, "False positive: retail trade / marketing"
+
+    # Disambiguation 3: payroll clerk vs tax economics
+    if re.search(r"\b(lohnbuchhaltung|payroll|gehaltsabrechnung)\b", norm_t):
+        return True, "False positive: payroll clerk"
+
+    # Disambiguation 4: electrical switchgear vs Geographic Information Systems
+    norm_all = f"{norm_t} {_fold(strip_invisibles(description or ''))}"
+    if "switchgear" in norm_all or "gasisolierte schaltanlage" in norm_all:
+        return True, "False positive: electrical switchgear GIS"
+
+    return False, None
 
 
 def dedup_key(company, title):

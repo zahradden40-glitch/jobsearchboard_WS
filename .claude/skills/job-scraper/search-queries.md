@@ -32,59 +32,60 @@ Secondary (company career pages / broad discovery via WebSearch):
 
 Queries are grouped by priority. Write **each category in every language from your Languages table** (see Language scope above). Combine each query with your location terms (e.g. your city, region, or metro area) where the site supports it.
 
-### Priority 1: Process / chemical engineering roles
+### Priority 1: Core Economics & VWL Roles
 
 Core title phrasings, taken from live German postings (see `job_scraper/search-profiles.json`).
 
 ```
-site:stepstone.de "Verfahrensingenieur" OR "Prozessingenieur"
-site:xing.com/jobs "Chemieingenieur"
-site:indeed.com/de "Verfahrensingenieur (m/w/d)"
-site:linkedin.com/jobs "Process Engineer" Germany
-"Verfahrenstechniker" Stellenangebote Deutschland
+site:stepstone.de "Volkswirt" OR "Ökonom" OR "Volkswirtschaftslehre"
+site:xing.com/jobs "Wirtschaftsforschung" OR "Wirtschaftsanalyse"
+site:linkedin.com/jobs "Economist" OR "Economic Research" Germany
+"Volkswirt" Stellenangebote Deutschland
+"Angewandte Volkswirtschaftslehre" OR "Wirtschaftspolitik"
 ```
 
-### Priority 2: Simulation and process design
+### Priority 2: Policy Analysis, Development & Sectoral Economics
 
 ```
-"Prozesssimulation" OR "Process Simulation" Stellenangebote
-"Massen- und Energiebilanzen" Verfahrenstechnik
-"Aspen Plus" OR "Prozess-Simulationssoftware" Stellenangebote
-site:linkedin.com/jobs "Process Design & Optimization" Germany
+"Entwicklungsökonomie" OR "Development Economics" OR "Entwicklungszusammenarbeit"
+"Wirtschaftspolitik" OR "Policy Analysis" OR "Politikberatung"
+"Umweltökonomie" OR "Energieökonomie" OR "Klimaökonomie" OR "Energy Economics"
+"Arbeitsmarktökonomie" OR "Gesundheitsökonomie" OR "Finanzwissenschaft"
+"Wettbewerbsökonomie" OR "Industrial Organization" OR "Außenwirtschaft"
 ```
 
-### Priority 3: Werkstudent / Praktikum / Abschlussarbeit
+### Priority 3: Junior, PreDoc, Research Assistant & Student Roles
 
-Student and thesis roles are targets, not noise - do **not** filter these out.
-
-```
-"Werkstudent Verfahrenstechnik" OR "Werkstudent*in Energietechnik"
-"Praktikum Verfahrenstechnik" OR "Pflichtpraktikum" Verfahrenstechnik
-"Praktikum/Abschlussarbeit" Verfahrenstechnik OR Energietechnik
-site:stepstone.de Werkstudent Verfahrenstechnik
-```
-
-### Priority 4: Domain specialisations
-
-Gas processing, thermal separation, and energy transition.
+Student, entry-level, and research associate roles are primary targets:
 
 ```
-"Biogasaufbereitung" OR "Gasreinigungsanlagen" Stellenangebote
-"CO2-Verflüssigung" OR "Verfahrensfließbild" OR "R&I Fließbild"
-"Destillation" OR "Rektifikation" Verfahrensingenieur
-"Trenntechnik" OR "Wärmetauscher" OR "Lösungsmittelrückgewinnung"
-"HAZOP" OR "DGRL" OR "ATEX" OR "DVGW" OR "AD2000" Ingenieur
-"Erneuerbare Energien" OR "Energiewende" Ingenieur
+"Wissenschaftlicher Mitarbeiter" VWL OR Wirtschaftswissenschaften
+"Research Assistant" Economics OR "PreDoc" Economics
+"Werkstudent VWL" OR "Werkstudent Volkswirtschaft" OR "Working Student Economics"
+"Praktikum Volkswirtschaftslehre" OR "Praktikum Economics" OR "Internship Economics"
+"Junior Economist" OR "Junior Analyst" Wirtschaftsforschung
+```
+
+### Priority 4: Econometric & Quantitative Skills
+
+```
+"Stata" OR "R" OR "Econometrics" "Volkswirt"
+"Mikroökonometrie" OR "Kausalanalyse" OR "Paneldaten" Stellenangebote
+"Causal Inference" OR "Difference-in-Differences" "Economics"
 ```
 
 ## Location Filter
 
-When evaluating results, verify the job location is within reasonable commute distance from your home. Define acceptable areas:
-- [YOUR_CITY] and surrounding areas
-- [ACCEPTABLE_AREA_1]
-- [ACCEPTABLE_AREA_2]
-- [BORDERLINE_AREA] (borderline - ~X min by transit)
-- [TOO_FAR_AREA] (too far)
+- **Primary:** Germany (Nationwide / Remote)
+- **Approved Cross-Border Commuter Zones (60-90 min max):**
+  - Netherlands: Enschede, Hengelo, Arnhem, Nijmegen, Venlo
+  - Luxembourg: Luxembourg City, Esch-sur-Alzette
+  - Belgium: Eupen, Liège
+  - France: Strasbourg, Haguenau, Mulhouse
+  - Switzerland: Basel, Schaffhausen, Kreuzlingen
+  - Austria: Salzburg, Kufstein, Bregenz
+  - Czechia, Poland, Denmark immediate border areas
+- **Distant International:** Excluded unless fully remote/hybrid with German residence.
 
 ## Language Filter
 
