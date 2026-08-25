@@ -67,6 +67,19 @@ function renderTable(cards: JobCard[]): string {
 
 export async function runSearch(opts: SearchOpts): Promise<number> {
   try {
+    if (opts.limit === 0) {
+      if (opts.format === "table") {
+        process.stdout.write(renderTable([]) + "\n")
+      } else if (opts.format === "plain") {
+        process.stdout.write("")
+      } else {
+        process.stdout.write(
+          JSON.stringify({ meta: { count: 0, page: opts.page }, results: [] }, null, 2) + "\n",
+        )
+      }
+      return 0
+    }
+
     const response = await apiFetch(`${SEARCH_URL}?page=${opts.page}`)
     if (!response) {
       writeError("Arbeitnow API returned no data for this page", "NOT_FOUND")

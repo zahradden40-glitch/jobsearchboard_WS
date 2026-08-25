@@ -40,9 +40,10 @@ linkedin_Profile.pdf
 *.png
 !cover_letters/OpenFonts/fonts/**
 
-# OS files
+# OS files & logs
 .DS_Store
 Thumbs.db
+*.zip
 
 # Editor
 .vscode/

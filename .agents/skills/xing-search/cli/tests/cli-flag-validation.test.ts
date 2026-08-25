@@ -20,7 +20,7 @@ describe("Xing CLI flag validation", () => {
     })
 
     test("zero is accepted (falsy int should not be treated as missing)", async () => {
-      const result = await runCLI(["search", "--jobage", "0", "--limit", "1"])
+      const result = await runCLI(["search", "--jobage", "0", "--limit", "0"])
       const err = parsedStderr(result.stderr)
       expect(err.code).not.toBe("BAD_ARG")
     })
