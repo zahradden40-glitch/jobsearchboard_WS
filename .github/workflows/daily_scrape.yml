@@ -1,0 +1,78 @@
+name: Daily Job Scrape & Digest
+
+on:
+  schedule:
+    # 06:00 UTC = 08:00 CEST (Europe/Berlin summer) / 07:00 CET (winter)
+    - cron: '0 6 * * *'
+  workflow_dispatch: # Allows manual trigger via the GitHub Actions UI
+
+permissions:
+  contents: read
+
+jobs:
+  scrape-and-digest:
+    name: Run Scrape & Send Email Digest
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Restore seen jobs cache
+        uses: actions/cache/restore@v4
+        id: restore-seen
+        with:
+          path: job_scraper/seen_jobs.json
+          key: seen-jobs-${{ github.run_id }}
+          restore-keys: |
+            seen-jobs-
+
+      - name: Run Headless Scraper
+        run: |
+          mkdir -p job_scraper/pools job_scraper/logs
+          DATE=$(date +%F)
+          python3 tools/run_scrape.py --out "job_scraper/pools/${DATE}.json" --update-seen
+
+      - name: Dispatch Email Digest
+        env:
+          JOBSEARCH_SMTP_HOST: ${{ secrets.JOBSEARCH_SMTP_HOST || 'smtp.gmail.com' }}
+          JOBSEARCH_SMTP_PORT: ${{ secrets.JOBSEARCH_SMTP_PORT || '587' }}
+          JOBSEARCH_SMTP_USER: ${{ secrets.JOBSEARCH_SMTP_USER }}
+          JOBSEARCH_SMTP_PASSWORD: ${{ secrets.JOBSEARCH_SMTP_PASSWORD }}
+          JOBSEARCH_DIGEST_TO: ${{ secrets.JOBSEARCH_DIGEST_TO || secrets.JOBSEARCH_SMTP_USER }}
+          JOBSEARCH_DIGEST_FROM: ${{ secrets.JOBSEARCH_DIGEST_FROM || secrets.JOBSEARCH_SMTP_USER }}
+        run: |
+          DATE=$(date +%F)
+          if [ -n "$JOBSEARCH_SMTP_PASSWORD" ]; then
+            python3 tools/send_digest.py "job_scraper/pools/${DATE}.json"
+          else
+            echo "::warning::JOBSEARCH_SMTP_PASSWORD secret is not configured in GitHub Secrets. Rendering preview only."
+            python3 tools/send_digest.py "job_scraper/pools/${DATE}.json" --html-out "job_scraper/logs/${DATE}.html" || true
+          fi
+
+      - name: Save updated seen jobs cache
+        uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: job_scraper/seen_jobs.json
+          key: seen-jobs-${{ github.run_id }}
+
+      - name: Upload Scrape Artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: scrape-pool-${{ github.run_number }}
+          path: |
+            job_scraper/pools/
+            job_scraper/logs/
+          retention-days: 14
