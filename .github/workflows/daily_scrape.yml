@@ -60,6 +60,11 @@ jobs:
             python3 tools/send_digest.py "job_scraper/pools/${DATE}.json" --html-out "job_scraper/logs/${DATE}.html" || true
           fi
 
+      - name: Export to SQLite & Interactive HTML Dashboard
+        if: always()
+        run: |
+          python3 tools/export_sqlite.py --seen job_scraper/seen_jobs.json --db job_scraper/jobs.db --html job_scraper/logs/dashboard.html
+
       - name: Save updated seen jobs cache
         uses: actions/cache/save@v4
         if: always()
@@ -67,12 +72,14 @@ jobs:
           path: job_scraper/seen_jobs.json
           key: seen-jobs-${{ github.run_id }}
 
-      - name: Upload Scrape Artifacts
+      - name: Upload Scrape Artifacts (Database, Dashboard & Logs)
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: scrape-pool-${{ github.run_number }}
+          name: scrape-results-${{ github.run_number }}
           path: |
-            job_scraper/pools/
+            job_scraper/jobs.db
+            job_scraper/logs/dashboard.html
             job_scraper/logs/
+            job_scraper/pools/
           retention-days: 14
