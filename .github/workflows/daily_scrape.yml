@@ -47,13 +47,14 @@ jobs:
         env:
           JOBSEARCH_SMTP_HOST: ${{ secrets.JOBSEARCH_SMTP_HOST || 'smtp.gmail.com' }}
           JOBSEARCH_SMTP_PORT: ${{ secrets.JOBSEARCH_SMTP_PORT || '587' }}
-          JOBSEARCH_SMTP_USER: ${{ secrets.JOBSEARCH_SMTP_USER }}
+          JOBSEARCH_SMTP_USER: ${{ secrets.JOBSEARCH_SMTP_USER || 'zahradden40@gmail.com' }}
           JOBSEARCH_SMTP_PASSWORD: ${{ secrets.JOBSEARCH_SMTP_PASSWORD }}
-          JOBSEARCH_DIGEST_TO: ${{ secrets.JOBSEARCH_DIGEST_TO || secrets.JOBSEARCH_SMTP_USER }}
-          JOBSEARCH_DIGEST_FROM: ${{ secrets.JOBSEARCH_DIGEST_FROM || secrets.JOBSEARCH_SMTP_USER }}
+          JOBSEARCH_DIGEST_TO: ${{ secrets.JOBSEARCH_DIGEST_TO || secrets.JOBSEARCH_SMTP_USER || 'zahradden40@gmail.com' }}
+          JOBSEARCH_DIGEST_FROM: ${{ secrets.JOBSEARCH_DIGEST_FROM || secrets.JOBSEARCH_SMTP_USER || 'zahradden40@gmail.com' }}
         run: |
           DATE=$(date +%F)
-          if [ -n "$JOBSEARCH_SMTP_PASSWORD" ]; then
+          if [ -n "$JOBSEARCH_SMTP_PASSWORD" ] && [ -n "$JOBSEARCH_SMTP_USER" ]; then
+            echo "Dispatching email digest via SMTP ($JOBSEARCH_SMTP_HOST)..."
             python3 tools/send_digest.py "job_scraper/pools/${DATE}.json"
           else
             echo "::warning::JOBSEARCH_SMTP_PASSWORD secret is not configured in GitHub Secrets. Rendering preview only."
